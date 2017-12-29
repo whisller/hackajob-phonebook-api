@@ -1,0 +1,4 @@
+flask==0.12.2
+Flask-HTTPAuth==3.2.3
+raven==6.4.0
+peewee==2.10.2

@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    build: .
+    environment:
+      - "DATABASE=phonebook.db"
+    command: python install.py
+  api:
+    build: .
+    volumes:
+      - ./:/app
+    ports:
+      - 8080:8080
+    environment:
+      - "DEBUG=1"
+      - "DATABASE=phonebook.db"
+    command: bash -c "python setup.py develop && api"
+    links:
+      - db
+  test:
+    build: .
+    environment:
+      - "DEBUG=1"
+      - "DATABASE=phonebook.db"
+    volumes:
+      - ./:/app
+    command: bash -c "pip install -r requirements_dev.txt && invoke test"
