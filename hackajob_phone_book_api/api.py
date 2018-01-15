@@ -14,7 +14,7 @@ if os.environ.get('SENTRY'):
     sentry = Sentry(app, dsn=os.environ.get('SENTRY'))
 
 
-@app.route('/entries', methods=['POST'], endpoint='create_one')
+@app.route('/entries', methods=['POST'])
 @auth.login_required
 def post():
     model = request.get_json(force=True, silent=True)
@@ -24,13 +24,13 @@ def post():
     return jsonify(EntryRepository.create_one(model))
 
 
-@app.route('/entries/<entry_id>', methods=['GET'], endpoint='get_one')
+@app.route('/entries/<entry_id>', methods=['GET'])
 @auth.login_required
 def get(entry_id):
     return jsonify(EntryRepository.get_one(entry_id))
 
 
-@app.route('/entries/<entry_id>', methods=['DELETE'], endpoint='delete_one')
+@app.route('/entries/<entry_id>', methods=['DELETE'])
 @auth.login_required
 def delete(entry_id):
     EntryRepository.delete_one(entry_id)
